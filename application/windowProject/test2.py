@@ -2,7 +2,7 @@ import wx
 
 class MemoFrame(wx.Frame):
     def __init__(self):
-        super().__init__(None, title="메모장 프로그램")
+        super().__init__(None, title="메모장 프로그램", size=(800, 600))
         self.design()
 
     def design(self):
@@ -25,13 +25,34 @@ class MemoFrame(wx.Frame):
 
         self.SetMenuBar(menubar)
 
-        wx.TextCtrl(self, style=wx.TE_MULTILINE)
+        self.txtArea = wx.TextCtrl(self, style=wx.TE_MULTILINE)
 
         self.CreateStatusBar()
+
+        self.Bind(wx.EVT_MENU, self.onNew, mnuFile_new)
+        self.Bind(wx.EVT_MENU, self.onExit, mnuFile_exit)
+        self.Bind(wx.EVT_MENU, self.onOpen, mnuFile_open)
 
         #self.Move(100, 100)
         self.Center()
 
+    def onNew(self, evt):
+        self.txtArea.SetLabelText("새 문서를 선택하였습니다.")
+
+    def onExit(self, evt):
+        self.Close(True)
+
+    def onOpen(self, evt):
+        # f = open("C:\\netsong7\\pythonwork\\ai\\data\\train.csv")
+        dlg = wx.FileDialog(self, "파일 불러오기", "c:\\", "", "*.*", style=wx.ID_OPEN)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            selectedFile = dlg.GetPaths()[0]
+
+        f = open(selectedFile, "r")
+        data = f.read()
+        self.txtArea.SetLabelText(data)
+        f.close()
 
 if __name__ == "__main__":
     app = wx.App()

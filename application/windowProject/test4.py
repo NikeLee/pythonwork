@@ -14,6 +14,7 @@ Dialog(대화 상자)
 
 
 import wx
+from test3 import LoginFrame
 
 class MainFrame(wx.Frame):
     def __init__(self):
@@ -52,13 +53,22 @@ class MainFrame(wx.Frame):
     def onColour(self, evt):
         self.SetStatusText("색상 대화 상자")
         dlg = wx.ColourDialog(self)
-        dlg.ShowModal()
+
+        if dlg.ShowModal() == wx.ID_OK:
+            color = dlg.GetColourData()
+            self.SetStatusText("당신이 선택한 색상은 " + str(color.GetColour().Get()))
 
     def onFile(self, evt):
-        pass
+        self.SetStatusText("파일 대화 상자")
+        dlg = wx.FileDialog(self, "파일 불러오기", "c:\\", "", "*.*", style=wx.ID_OPEN)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            self.SetStatusText("당신이 선택한 파일은 " + dlg.GetPaths()[0])
 
     def onLogin(self, evt):
-        pass
+        self.SetStatusText("로그인 대화 상자")
+        dlg = LoginFrame(self)
+        dlg.ShowModal()
 
 
 

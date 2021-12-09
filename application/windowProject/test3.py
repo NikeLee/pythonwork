@@ -1,8 +1,8 @@
 import wx
 
-class LoginFrame(wx.Frame):
-    def __init__(self):
-        super().__init__(None, title="로그인", size=(300, 200))
+class LoginFrame(wx.Dialog):
+    def __init__(self, parent):
+        super().__init__(parent, title="로그인", size=(300, 200))
         self.design()
 
     def design(self):
@@ -80,6 +80,6 @@ class LoginFrame(wx.Frame):
 
 if __name__ == "__main__":
     app = wx.App()
-    frame = LoginFrame()
+    frame = LoginFrame(None)
     frame.Show(True)
     app.MainLoop()
